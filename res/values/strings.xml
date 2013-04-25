@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Heart Alert</string>
+    <string name="app_id">HeartAlert</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+
+    <string name="HXM_SERVICE_MSG_STATE">MESSAGE_STATE_CHANGE: message from HxM service indicating that the state of the service has been updated, and may have changed</string>
+    <string name="HXM_SERVICE_MSG_READ">HXM_SERVICE_MSG_READ: message from HxM service with data read from the device</string>
+    <string name="HXM_SERVICE_MSG_DEVICE_NAME">HXM_SERVICE_MSG_DEVICE_NAME: message from HxM service indicating the name of the device that a connection is associated with</string>
+    <string name="HXM_SERVICE_MSG_TOAST">HXM_SERVICE_MSG_TOAST: message from HxM service requesting a toast be shown to the user</string>
+        
+    
+    <string name="HXM_SERVICE_RESTING">HXM_SERVICE_RESTING: HxM service is at rest</string>
+    <string name="HXM_SERVICE_CONNECTING">HXM_SERIVICE_CONNECTING: HxM service is trying to connect to an HxM</string>
+    <string name="HXM_SERVICE_CONNECTED">HXM_SERVICE_CONNECTED: HxM service is connected to a HxM</string>
+</resources>

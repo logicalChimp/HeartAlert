@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="uk.co.mentalspace.android.heartalert"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+	<application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="uk.co.mentalspace.android.heartalert.SettingsActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <receiver android:name="uk.co.mentalspace.android.heartalert.mw.MetaWatchReceiver" >
+            <intent-filter>
+                <action android:name="org.metawatch.manager.APPLICATION_DISCOVERY" />
+                <action android:name="org.metawatch.manager.APPLICATION_ACTIVATE" />
+                <action android:name="org.metawatch.manager.APPLICATION_DEACTIVATE" />
+                <action android:name="uk.co.mentalspace.heartalert.hxmReading" />
+           	</intent-filter>
+        </receiver>
+
+        <service android:name="uk.co.mentalspace.android.heartalert.MonitorService" />
+        <service android:name="uk.co.mentalspace.android.heartalert.mw.MetaWatchService" />
+        </application>
+
+</manifest>

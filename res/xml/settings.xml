@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	    
+    <Preference 
+        android:key="setting_start_service" 
+        android:summary="Start the monitoring service, if it is not already running" 
+        android:title="Start the service" />
+    <CheckBoxPreference
+        android:key="setting_auto_connect"
+        android:summary="Automatically connect if in range"
+        android:title="Auto connect"
+        android:defaultValue="false" />
+
+	<PreferenceCategory
+        android:title="Notifications"
+        android:key="setting_main_category">
+	    <CheckBoxPreference
+	        android:key="setting_show_connection_notification"
+	        android:summary="Show current HxM connection status in a notification"
+	        android:title="Connection status notification"
+	        android:defaultValue="true" />
+	    <CheckBoxPreference
+	        android:key="setting_show_hr_in_notification"
+	        android:summary="Show current heart rate in connection status notification (if connected)"
+	        android:title="Heart rate notification"
+	        android:dependency="setting_show_connection_notification"
+	        android:defaultValue="true" />
+   	</PreferenceCategory>
+	
+    <PreferenceCategory
+        android:title="Minimum Heart Rate Alarm"
+        android:key="setting_min_hr_alarm_category">
+        
+        <CheckBoxPreference
+            android:key="setting_min_alarm_enabled"
+            android:summary="Vibrate if heart rate falls too low"
+            android:title="Min heart rate alarm"
+            android:defaultValue="false" />
+        
+        <EditTextPreference
+            android:key="setting_min_alarm_value"
+            android:summary="Sound the alarm if the heart rate is below this value"
+            android:title="Minimum heart rate"
+            android:dependency="setting_min_alarm_enabled"
+            android:defaultValue="50" />
+        
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Minimum Heart Rate Alarm"
+        android:key="setting_min_hr_alarm_category">
+        
+        <CheckBoxPreference
+            android:key="setting_max_alarm_enabled"
+            android:summary="Vibrate if heart rate goes too high"
+            android:title="Max heart rate alarm"
+            android:defaultValue="true" />
+        
+        <EditTextPreference
+            android:key="setting_max_alarm_value"
+            android:summary="Sound the alarm if the heart rate is above this value"
+            android:title="Maximum heart rate"
+            android:dependency="setting_max_alarm_enabled"
+            android:defaultValue="180" />
+    </PreferenceCategory>
+    
+    <PreferenceScreen
+        android:key="setting_debug_screen"
+        android:title="Debug"
+        android:persistent="false" >
+
+        <CheckBoxPreference
+            android:key="setting_debug_enable_error_logging"
+            android:summary="Enable 'error' level log statements written to Logcat"
+            android:title="Enable logging (Errors)"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="setting_debug_enable_warning)logging"
+            android:summary="Enable 'warning' level log statements written to Logcat"
+            android:title="Enable logging (Warnings)"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="setting_debug_enable_info_logging"
+            android:summary="Enable 'info' level log statements written to Logcat"
+            android:title="Enable logging (Info)"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="setting_debug_enable_debug_logging"
+            android:summary="Enable 'debug' level log statements written to Logcat"
+            android:title="Enable logging (Debug)"
+            android:defaultValue="false" />
+        <CheckBoxPreference
+            android:key="setting_debug_enable_verbose_logging"
+            android:summary="Enable 'verbose' level log statements written to Logcat"
+            android:title="Enable logging (Verbose)"
+            android:defaultValue="false" />
+    </PreferenceScreen>
+</PreferenceScreen>
