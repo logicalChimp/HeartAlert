@@ -26,7 +26,11 @@ public class MonitorService extends Service {
 	
 	private HxmService hxmService = null;
 
+	public static final String NOTIFICATION_TITLE_HXM_NOT_CONNECTED = "Not connected to HxM";
+	public static final String NOTIFICATION_TITLE_HXM_CONNECTING = "Connecting to HxM";
+	public static final String NOTIFICATION_TITLE_HXM_NOT_PAIRED = "HxM not paired to current device";
 	public static final String NOTIFICATION_TITLE_HXM_CONNECTED = "HxM Connected";
+	public static final String NOTIFICATION_TITLE_HXM_NO_BLUETOOTH = "No Bluetooth present on current device";
 	public static final String NOTIFICATION_TITLE_HXM_DISCONNECTED = "HxM Disconnected";
 	
 	public static final String ACTION_CONNECT_TO_HXM = "uk.co.mentalspace.heartalert.connectToHxm";
@@ -43,6 +47,7 @@ public class MonitorService extends Service {
 	public static final int STATUS_NONE_PAIRED = 2;
 	public static final int STATUS_CONNECTED = 3;
 	public static final int STATUS_NO_BLUETOOTH = 4;
+	public static final int STATUS_DISCONNECTED = 5;
 	private int mStatus = STATUS_NOT_CONNECTED;
 
 	private String mHxMName = null;
@@ -94,10 +99,29 @@ public class MonitorService extends Service {
 		sendBroadcast(response);
     }
     
-	private void handleReading(HxmReading reading) {
+    private String getConnectionStateNotificationTitle() {
+    	switch (mStatus) {
+    	case STATUS_NOT_CONNECTED:
+    		return NOTIFICATION_TITLE_HXM_NOT_CONNECTED;
+    	case STATUS_CONNECTING:
+    		return NOTIFICATION_TITLE_HXM_CONNECTING;
+    	case STATUS_NONE_PAIRED:
+    		return NOTIFICATION_TITLE_HXM_NOT_PAIRED;
+    	case STATUS_CONNECTED:
+    		return NOTIFICATION_TITLE_HXM_CONNECTED;
+    	case STATUS_NO_BLUETOOTH:
+    		return NOTIFICATION_TITLE_HXM_NO_BLUETOOTH;
+    	case STATUS_DISCONNECTED:
+    		return NOTIFICATION_TITLE_HXM_DISCONNECTED;
+    	default:
+    		return "Unknown status code";
+    	}
+    }
+
+    private void handleReading(HxmReading reading) {
 		int heartRate = reading.heartRate;
 		if (Preferences.enableInfoLogging) Log.i(LOGNAME, "Heart rate: "+heartRate);
-		setNotification(MonitorService.NOTIFICATION_TITLE_HXM_CONNECTED, "Current heart rate: "+heartRate, android.R.drawable.ic_lock_idle_charging);
+		if (Preferences.showHRInNotification) setNotification(getConnectionStateNotificationTitle(), "Current heart rate: "+heartRate, android.R.drawable.ic_lock_idle_charging);
 
 		Intent intent = new Intent();
         intent.setAction(MonitorService.ACTION_HXM_READING);
@@ -109,9 +133,13 @@ public class MonitorService extends Service {
     	if (Preferences.enableDebugLogging) Log.d(LOGNAME, "Connection status changed.  from ["+mStatus+"] to ["+statusCode+"]");
     	mStatus = statusCode;
     	sendConnectionStatusIntent();
+		if (Preferences.showConnectionNotification) setNotification(getConnectionStateNotificationTitle(), "", android.R.drawable.ic_lock_idle_charging);
     }
     
 	public void setNotification(String title, String msg, int drawable) {
+		if (Preferences.enableDebugLogging) Log.d(LOGNAME, "Show notification? "+Preferences.showConnectionNotification);
+		if (!Preferences.showConnectionNotification) return;
+		
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
 	        .setSmallIcon(drawable)
 	        .setContentTitle(title)
@@ -242,7 +270,6 @@ public class MonitorService extends Service {
 	                    break;
 	                    
 	                case HxmService.HXM_STATE_RESTING:
-	                	if (Preferences.enableDebugLogging) Log.d(LOGNAME, "MSG: Resting: delivery time ["+msg.getWhen()+"], msg ["+msg.toString()+"]");
 	                	MonitorService.this.updateConnectionStatus(MonitorService.STATUS_NOT_CONNECTED);
 		                Toast.makeText(getApplicationContext(), "State change: now resting", Toast.LENGTH_SHORT).show();
 	                    break;
@@ -262,14 +289,14 @@ public class MonitorService extends Service {
                 if (Preferences.enableDebugLogging) Log.d(LOGNAME, "MSG Type [HXM STATUS], Value ["+msgId+"]");
             	switch (msgId) {
             	case HxmService.HXM_STATUS_CONNECT_TO_DEVICE_FAILED:
-	                Toast.makeText(getApplicationContext(), "Connect to device failed", Toast.LENGTH_SHORT).show();
+//	                Toast.makeText(getApplicationContext(), "Connect to device failed", Toast.LENGTH_SHORT).show();
 	                break;
             	case HxmService.HXM_STATUS_CONNECTION_LOST:
-	                Toast.makeText(getApplicationContext(), "Connection lost", Toast.LENGTH_SHORT).show();
+//	                Toast.makeText(getApplicationContext(), "Connection lost", Toast.LENGTH_SHORT).show();
 	                break;
             	case HxmService.HXM_STATUS_CONNECTED_TO_DEVICE:
-            		String deviceName = msg.getData().getString(HxmService.EXTRA_DEVICE_NAME);
-	                Toast.makeText(getApplicationContext(), "Connected to ["+deviceName+"]", Toast.LENGTH_SHORT).show();
+//            		String deviceName = msg.getData().getString(HxmService.EXTRA_DEVICE_NAME);
+//	                Toast.makeText(getApplicationContext(), "Connected to ["+deviceName+"]", Toast.LENGTH_SHORT).show();
 	                break;
             	}
             }
