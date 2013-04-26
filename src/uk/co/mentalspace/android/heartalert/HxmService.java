@@ -59,7 +59,7 @@ import uk.co.mentalspace.android.utils.DebugUtils;
  */
 public class HxmService {
     // Debugging
-    private static final String TAG = "HrmService";
+    private static final String TAG = "HxmService";
 
     public static final int MSG_TYPE_HXM_STATE = 0;
     public static final int MSG_TYPE_HXM_STATUS = 1;
