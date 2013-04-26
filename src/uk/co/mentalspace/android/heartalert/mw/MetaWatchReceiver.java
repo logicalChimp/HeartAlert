@@ -1,11 +1,11 @@
 package uk.co.mentalspace.android.heartalert.mw;
 
-import android.content.BroadcastReceiver;
 import uk.co.mentalspace.android.heartalert.MonitorService;
+import android.content.BroadcastReceiver;
 import uk.co.mentalspace.android.heartalert.Preferences;
 import uk.co.mentalspace.android.heartalert.R;
-import uk.co.mentalspace.android.utils.MW;
-import uk.co.mentalspace.android.utils.MWIntentGenerator;
+import uk.co.mentalspace.android.mw.utils.MW;
+import uk.co.mentalspace.android.mw.utils.MWIntentGenerator;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;

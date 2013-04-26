@@ -228,8 +228,9 @@ public class MonitorService extends Service {
         public void handleMessage(Message msg) {
             switch (msg.what) {
             case HxmService.MSG_TYPE_HXM_STATE: 
-                if (Preferences.enableDebugLogging) Log.d(LOGNAME, "MSG Type [HXM STATE], Value ["+msg.arg1+"]");
-                switch (msg.arg1) {
+                int state = (Integer)msg.obj;
+                if (Preferences.enableDebugLogging) Log.d(LOGNAME, "MSG Type [HXM STATE], Value ["+state+"]");
+                switch (state) {
 	                case HxmService.HXM_STATE_CONNECTED:
 	                	MonitorService.this.updateConnectionStatus(MonitorService.STATUS_CONNECTED);
 		                Toast.makeText(getApplicationContext(), "State change: now connected", Toast.LENGTH_SHORT).show();

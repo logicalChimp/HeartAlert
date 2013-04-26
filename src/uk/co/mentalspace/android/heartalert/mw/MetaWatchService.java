@@ -1,13 +1,13 @@
 package uk.co.mentalspace.android.heartalert.mw;
 
-import java.util.Date;
 
+import java.util.Date;
 import uk.co.mentalspace.android.heartalert.HxmReading;
 import uk.co.mentalspace.android.heartalert.MonitorService;
 import uk.co.mentalspace.android.heartalert.Preferences;
 import uk.co.mentalspace.android.heartalert.R;
-import uk.co.mentalspace.android.utils.Utils;
-import uk.co.mentalspace.android.utils.MW;
+import uk.co.mentalspace.android.mw.utils.Utils;
+import uk.co.mentalspace.android.mw.utils.MW;
 import android.app.IntentService;
 import android.content.Intent;
 import android.graphics.Bitmap;

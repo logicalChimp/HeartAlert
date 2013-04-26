@@ -30,8 +30,8 @@
 
 package uk.co.mentalspace.android.heartalert;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.UUID;
@@ -44,6 +44,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import uk.co.mentalspace.android.utils.DebugUtils;
 
 /**
  * Taken from the HxmDemo, and modified to remove reliance on explicit R.id.*, R.string.* etc
@@ -64,13 +65,13 @@ public class HxmService {
     public static final int MSG_TYPE_HXM_STATUS = 1;
     public static final int MSG_TYPE_HXM_READING = 2;
     
-    public static final int HXM_STATE_RESTING = 0;
-    public static final int HXM_STATE_CONNECTING = 1;
-    public static final int HXM_STATE_CONNECTED = 2;
+    public static final int HXM_STATE_RESTING = 10;
+    public static final int HXM_STATE_CONNECTING = 11;
+    public static final int HXM_STATE_CONNECTED = 12;
 
-    public static final int HXM_STATUS_CONNECT_TO_DEVICE_FAILED = 0;
-    public static final int HXM_STATUS_CONNECTION_LOST = 1;
-    public static final int HXM_STATUS_CONNECTED_TO_DEVICE = 2;
+    public static final int HXM_STATUS_CONNECT_TO_DEVICE_FAILED = 20;
+    public static final int HXM_STATUS_CONNECTION_LOST = 21;
+    public static final int HXM_STATUS_CONNECTED_TO_DEVICE = 22;
     
     public static final String EXTRA_DEVICE_NAME = "deviceName";
     public static final String EXTRA_STATUS_CODE = "statusCode";
@@ -107,6 +108,7 @@ public class HxmService {
      */
     private synchronized void setState(int state) {
     	if (Preferences.enableDebugLogging) Log.d(TAG, "setState() " + mState + " -> " + state);
+    	if (Preferences.enableVerboseLogging) DebugUtils.dumpStackTrace(TAG);
         mState = state;
 
         // Give the new state to the Handler so the UI Activity can update
