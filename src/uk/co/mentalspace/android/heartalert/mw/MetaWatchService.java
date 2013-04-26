@@ -154,15 +154,22 @@ public class MetaWatchService extends IntentService implements MW {
 		tp.setColor(textColor);
 		tp.setTypeface(fontface);
 		tp.setTextSize(fontsize);
+		tp.setTextAlign(Align.RIGHT);
+
+		canvas.drawText("Zephyr ("+reading.hardWareId+")", 72, 10, tp);
+		canvas.drawText("Heart rate: ", 72, 25, tp);
+		canvas.drawText("Beat number: ", 72, 35, tp);
+		canvas.drawText("Speed: ", 72, 45, tp);
+		canvas.drawText("Strides: ", 72, 55, tp);
+		canvas.drawText("Battery: ", 72, 65, tp);
+
 		tp.setTextAlign(Align.LEFT);
-
-		canvas.drawText("Zephyr ("+reading.hardWareId+")", 2, 10, tp);
-		canvas.drawText("Heart rate:  "+reading.heartRate, 2, 25, tp);
-		canvas.drawText("Beat number: "+reading.heartBeatNumber, 2, 35, tp);
-		canvas.drawText("Speed:       "+reading.speed, 2, 45, tp);
-		canvas.drawText("Strides      "+reading.strides, 2, 55, tp);
-		canvas.drawText("Battery:     "+reading.batteryIndicator+"%", 2, 65, tp);
-
+		canvas.drawText(""+reading.heartRate, 76, 25, tp);
+		canvas.drawText(""+reading.heartBeatNumber, 76, 35, tp);
+		canvas.drawText(""+reading.speed, 76, 45, tp);
+		canvas.drawText(""+reading.strides, 76, 55, tp);
+		canvas.drawText(""+reading.batteryIndicator+"%", 76, 65, tp);
+		
 		int[] array = Utils.bitmapToPixelArray(bitmap);
 		
 		if (Preferences.enableDebugLogging) Log.d(LOGNAME, "Sending Update intent");
